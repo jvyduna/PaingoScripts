@@ -4,8 +4,8 @@ I finds the Pangolin scripting language (PangoScript) to be quite painful, but I
 
 ## Scripts
 
-* **Knob or fader to QuickFX 2^X speeds** - Takes a fader or rotary pot on a MIDI controller, such as on a APC40mk2 or Traktor F1, and scale the global cue speed to snap to a 2^X speed multiplier (25%, 50%, 100%, 200%, 400%, etc). For example, if you've made cues with a 4 beat duration, this lets you us a MIDI control to instantly change their duration to 8, 16, or 32 beats (as well as 2, 1, 1/2, 1/4 of a beat).
-* **Rotary relative encoder to 2^X cue speeds** - Takes a rotary incremental (relative mode) encoder on a MIDI controller, such as on a APC40mk2 or Traktor F1, and scale the metronome for beat-based effects in selected QuickFX rows to snap to a 2^X time scale multiplier. For example, if you've made effects with a 2 beat nominal duration, this lets you twist a knob and instantly change their duration to 2, 4, 8, or 16 beats (as well as 1, 1/2, 1/4, or 1/16th of a beat).
+* **[Knob or fader to QuickFX 2^X speeds](scripts/Knob%20or%20fader%20to%20QuickFX%202%5EX%20speeds.BeyondCode)** - Takes a fader or rotary pot on a MIDI controller, such as on a APC40mk2 or Traktor F1, and scale the global cue speed to snap to a 2^X speed multiplier (25%, 50%, 100%, 200%, 400%, etc). For example, if you've made cues with a 4 beat duration, this lets you us a MIDI control to instantly change their duration to 8, 16, or 32 beats (as well as 2, 1, 1/2, 1/4 of a beat).
+* **[Rotary relative encoder to 2^X cue speeds](scripts/Rotary%20relative%20encoder%20to%202%5EX%20cue%20speeds.BeyondCode)** - Takes a rotary incremental (relative mode) encoder on a MIDI controller, such as on a APC40mk2 or Traktor F1, and scale the metronome for beat-based effects in selected QuickFX rows to snap to a 2^X time scale multiplier. For example, if you've made effects with a 2 beat nominal duration, this lets you twist a knob and instantly change their duration to 2, 4, 8, or 16 beats (as well as 1, 1/2, 1/4, or 1/16th of a beat).
 
 ## PangoScript Documentation
 
