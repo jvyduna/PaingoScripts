@@ -1,0 +1,60 @@
+// Quantize a continuous input (fader/potentiometer) to 2^x beat scaling in FX.
+
+// Take a 0-127 Midi value and select a 2^i multiplier 
+   //  for i in [-4, 4]
+// Assumes a nominal FX duration of 2 beats to work best 
+// by producing multipliers that result in 32 beats at 
+// knob minimum (MIDI 0), 2 beats at knob center, 
+// and 1/16 of a beat (thirtysecond notes) at MIDI 127.
+
+// If you want to consume the current metronome multiplier, add the next
+// two lines to your MIDI device initializstion script in MIDI settings.
+GlobalVar gMetroAx
+gMetroAx = 0
+
+Var metroScaleVal
+metroScaleVal = 0
+metroScaleVal = ExtValue(0,8.999) // Scale incoming MIDI value to 0..9
+
+// Uncomment for dubugging values to the laser preview window
+// DisplayPreview "Value:", metroScaleVal, 0xffffff
+
+
+var metroAx // Metronome Multiplier (doc misnomer? Seems like a divisor)
+
+// Assumes the FX duration is set to 2 beats.
+// int(metroSlider): Beat duration, multiplier
+// 0-1: 32 beats, 1/16
+// 1: 16 beats, .125
+// 2: 8 beats, .25
+// 3: 4 beats, .5
+// 4: 2 beats or nominal - 1<<4 /16 = 1x multiplier;
+// 5: 1 beat: multiplier of 2
+// 6: 1/2 (eigth note, *8 displayed), 4
+// 7: 1/4 (sixteenth note, *16 displayed), 8
+// 8: 1/8 (thirth-second note, *32 displayed), 16
+metroAx = max(1 << int(metroScaleVal), 1) / 16
+
+// DisplayPreview "metroAx", metroAx, 0xffffff
+
+gMetroAx = metroAx // Make value available to other scripts
+
+// Uncomment which QuickFX layers to apply the new metronome multipliers to.
+
+// FXTimeScaleAx 4, 2, metroAx  // Layer 1 = Color 1
+// FXTimeScaleAx 5, 2, metroAx  // Layer 2 = Color 2
+// FXTimeScaleAx 6, 2, metroAx  // Layer 3 = Zone
+FXTimeScaleAx 4, 2, metroAx  // Layer 4 = Intensity, Mask (1,2,3) 2=Metronome, multiplier
+FXTimeScaleAx 5, 2, metroAx  // Layer 5 = Structure
+FXTimeScaleAx 6, 2, metroAx  // Layer 6 = Movements
+
+
+// Display duration / period in beats on a Kontrol F1 7-seg display
+// Second argument to MidiOutLong should be 41 for the controller's unshifted page layer,
+// or 78 for the shifted display. Since I map this to a shifted page, I'm using 78.
+if (metroAx <= 2) MidiOutLong(0xBC, 78, int(2.0 / metroAx)))
+if (int(metroAx) = 4) MidiOutLong(0xBC, 78, 108)
+if (int(metroAx) = 8) MidiOutLong(0xBC, 78, 116)
+if (int(metroAx) = 16) MidiOutLong(0xBC, 78, 132)
+
+exit

@@ -1,0 +1,79 @@
+// Quantize an relative encoder input to 100*2^n cue speed.
+
+// SUMMARY
+
+// Takes MIDI values 1 (incr) and 127 (decr) to select a 2^i speed
+// multiplier for i in [-4, 4]. This produces multipliers of:
+//  100% * [1/16, 1/8, 1/4, 1/2, 1, 2, 4, 8, 16]
+
+
+// DETAILED DESCRIPTION
+
+// This script lets you set your cue speed to multiples of 2. For example.
+// if you had a cue designed for 1-beat duration, you can snap instantly to
+// scaling the duration slower to 2, 4, 8 beats, or faster to 1/2, 1/4,
+// etc., by setting MasterCueSpeed to 200%, 400%, 50%, etc. 
+
+// The script is configured to use input from a rotary incremental encoder
+// in "relative" mode. These limitless-rotation encoders typically have a
+// "click" feel during rotation, and send out MIDI valies of 1 (for
+// clockwise increment) and 127 (counterclockwise decrrement).
+
+// I commonly use a Traktor Kontrol F1 which has its default (unshifted)
+// encoder assigned to MIDI Control Channel 13 value 41 (hex BC 29 xx), 
+// so this script is pasted into the MIDI-to-PangoScript slot there. 
+// This controller also allows you to push the encoder down as a momentary
+// button. I use this to reset the master cue speed to 100% on receiving 
+// value 63. On Traktor, you configure this value (and turn-relative mode)
+// in the Controller Editor software. 
+
+// This script also displays the current effect duration in beats on the
+// MIDI contorller. The Traktor F1 has a 2-digit numeric display that I've
+// configured to display values sent to it on the same MIDI channel.
+
+// To store the current duration between inputs, you must use a Global
+// Variable. To set this up, paste the following (uncommented) in your
+// MIDI Controller's initialization script:
+
+// GLOBALVAR gCueSpeedFrac
+// gCueSpeedFrac = 1.0
+
+
+var cueSpeedDelta
+cueSpeedDelta = 0
+
+// Scale incoming MIDI value to decr = -1, push = 0, incr = 1
+cueSpeedDelta = ExtValue(1,-1) 
+
+// Uncomment for debugging. Displays text on the laser preview window.
+// DisplayPreview "cueSpeedDelta:", cueSpeedDelta, 0xffffff
+
+if (cueSpeedDelta > 0.5) gCueSpeedFrac = gCueSpeedFrac * 2 // Knob incr
+if (cueSpeedDelta < -0.5) gCueSpeedFrac = gCueSpeedFrac / 2 // Knob decr
+if ((cueSpeedDelta >= -0.5) & (cueSpeedDelta <= 0.5)) gCueSpeedFrac = 1 // Knob push -> reset
+if (gCueSpeedFrac > 17.0) gCueSpeedFrac = 16
+if (gCueSpeedFrac < .06) gCueSpeedFrac = .0625
+
+// Uncomment for debugging:
+// DisplayPreview "gCueSpeedFrac:", gCueSpeedFrac, 0xffffff
+
+// Display beat duration (period) on a Kontrol F1 7-segment display.
+// This assumes a default effect duration of 1 beat, so 50% speed runs FX
+// for 2 beats, and the display will show "2". 200% speed implies a 1/2 beat
+// duration, but because there's no "/" character possible I add the 
+// leading period (.) indicator: ".2" means "1/2 beat", ".4" = 1/4 beat, etc.
+
+var cueSpeedDispVal
+cueSpeedDispVal = 0
+cueSpeedDispVal = round(1.0 / gCueSpeedFrac) // .5 = 50%, display period of "2"
+
+// Display faster speeds over 100% as fractions of a beat.
+// 102 = "(dot)2". 4 = 400%, send 104, display "(dot)4" (period is 1/4th normal)
+if (gCueSpeedFrac > 1.0) cueSpeedDispVal = 100 + round(gCueSpeedFrac)
+MidiOutLong(0xBC, 41, cueSpeedDispVal)
+
+// Finally, set the actual cue speed. You may wish to use AnimationSpeed 
+// instead, or MasterFXSpeed to only speed up FX and not cues.
+MasterCueSpeed 100 * gCueSpeedFrac
+
+exit
