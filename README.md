@@ -9,7 +9,7 @@ I finds the Pangolin scripting language (PangoScript) to be quite painful, but I
 
 ## PangoScript Documentation
 
-[Official PangoScript Command List] (https://wiki.pangolin.com/doku.php?id=beyond:pangoscript_commands)
+[Official PangoScript Command List](https://wiki.pangolin.com/doku.php?id=beyond:pangoscript_commands)
 
 [Wiki Docs](https://wiki.pangolin.com/doku.php?id=beyond:pangoscript_commands) (see the PangoScript heading)
 
