@@ -1,0 +1,60 @@
+// Activate a Destination cue (Groups) on APC40 mk2's Track Select button or Clip Stop button
+
+// Requires GlobalVar lastDestinationCueNumber - Define these in the controller init scripts!
+// GlobalVar lastDestinationCueNumber
+// lastDestinationCueNumber = 0
+
+// For this script, Destination Cues page MUST be in page 1 of the whole workspace
+// Select a desitnation cue; CueDown is the only trigger possible -- MouseDown doesn't seem to work
+// Cancel all other track and clip stop indicator LEDs
+// Illuminate the correct light
+// Handle if a destination cue was clicked again by holding internal state
+
+// You must set this correctly for each button you add this script to
+Var destinationCueNumber 
+destinationCueNumber = 1
+
+Var isSecondRow
+isSecondRow = (destinationCueNumber > 8) & (destinationCueNumber <=16)
+
+// StartCue doesn't work for Destination cues
+CueDown 1, destinationCueNumber // Page 1 must be "Destinations" Cue sheet
+
+// Turn off all lights in this group
+// Using a loop was too slow for the device or PangoScript. :-/
+MidiOut 0x90, 0x33, 0x00
+MidiOut 0x91, 0x33, 0x00
+MidiOut 0x92, 0x33, 0x00
+MidiOut 0x93, 0x33, 0x00
+MidiOut 0x94, 0x33, 0x00
+MidiOut 0x95, 0x33, 0x00
+MidiOut 0x96, 0x33, 0x00
+MidiOut 0x97, 0x33, 0x00
+
+MidiOut 0x90, 0x34, 0x00
+MidiOut 0x91, 0x34, 0x00
+MidiOut 0x92, 0x34, 0x00
+MidiOut 0x93, 0x34, 0x00
+MidiOut 0x94, 0x34, 0x00
+MidiOut 0x95, 0x34, 0x00
+MidiOut 0x96, 0x34, 0x00
+MidiOut 0x97, 0x34, 0x00
+
+
+// Turn on this button's light
+MidiOut 0x90 + ((destinationCueNumber - 1) % 8), 0x33 + isSecondRow, 0x7F // 33 = track row, 90 where 0 is first light
+
+// Handle repeat press of same cue
+if (lastDestinationCueNumber = destinationCueNumber) Goto ToggleThisDestination
+
+destinationPlaying = 1 // Global. A new destination was clicked, so it's playing
+
+Goto FinishUp
+
+
+ToggleThisDestination:
+destinationPlaying = 1 - destinationPlaying // global
+if (destinationPlaying = 0) MidiOut 0x90 + ((destinationCueNumber - 1) % 8), 0x33 + isSecondRow, 0x00
+
+FinishUp:
+lastDestinationCueNumber = destinationCueNumber

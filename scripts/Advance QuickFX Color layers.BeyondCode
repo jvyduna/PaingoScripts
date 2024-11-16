@@ -1,0 +1,31 @@
+// Advance the currently running QuickFX from the color layers,
+// which are layers 1 and 2 in many QuickFX layouts.
+// Use this script in a MIDI-to-PangoScript slot.
+
+// As configured below, it will toggle advance through the first 24 colors
+// in layer 1, then in layer 2, then back to layer one (including a state where both layers are off)
+
+// Scripts like this that store some state in a golbal variable should have
+// that variable defined in the controller initialization script. Copy these these and uncomment:
+// GLOBALVAR gColorFXIdx
+// gColorFXIdx = 0
+
+gColorFXIdx = gColorFXIdx + 1 // advance on MIDI trigger
+gColorFXIdx = gColorFXIdx % 49
+
+MidiOutLong(0xBC, 41, gColorFXIdx) // Display on Traktor F1 the color index
+
+if (gColorFXIdx > 24) GOTO Layer2
+
+SetFX 2, 0
+SetFX 1, gColorFXIdx
+
+exit
+
+
+Layer2:
+
+SetFX 1, 0
+SetFX 2, gColorFXIdx - 24
+
+exit

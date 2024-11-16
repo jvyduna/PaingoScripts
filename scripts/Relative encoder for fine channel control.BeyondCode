@@ -1,0 +1,31 @@
+// Fine control from a relative encoder
+// Place this script in a MIDI-to-PangoScript slot.
+// and be sure to change the channel number in several places below
+
+// Channels are displayed in the UI as 0 to 100
+// but can be set as 0-1000 values using ChannelOut
+// Channel.<N>.Value is a fractional value 0...1
+VAR ChannelNumber, ChVal
+ChannelNumber = 5
+ChVal = int(Channels.5.Value * 1000)
+//DisplayPreview "Ch " + intstr(ChannelNumber) + " name iss: " + Channels.1.Name
+//DisplayPreview "Ch " + intstr(ChannelNumber) + " value (0-1000) was: " + intstr(ChVal)
+
+VAR MidiVal
+MidiVal = ExtValue(0,127)
+DisplayPreview "MidiVal: " + intstr(MidiVal)
+
+if (MidiVal > 64) GOTO Incr
+
+if (ChVal <= 0) GOTO Done
+ChannelOut ChannelNumber, int(ChVal - 1)
+//DisplayPreview "Decremented"
+GOTO Done
+
+Incr:
+if (ChVal >= 1000) GOTO Done
+ChannelOut ChannelNumber, ChVal + 1
+//DisplayPreview "Incremented"
+
+Done:
+//DisplayPreview "Ch " + intstr(ChannelNumber) + " value set to: " + intstr(ChVal) + "/1000"
