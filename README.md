@@ -1,6 +1,6 @@
 # PaingoScripts
 
-I finds the Pangolin scripting language (PangoScript) to be quite painful, but I've wrestled it unwillingly into doing some useful things. This repo contains scripts I've polished up with lots of comments.
+I find the Pangolin scripting language (PangoScript) to be quite painful, but I've wrestled it unwillingly into doing some useful things. This repo contains scripts I've polished up with lots of comments.
 
 ## Scripts
 
