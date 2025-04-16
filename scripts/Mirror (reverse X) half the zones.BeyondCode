@@ -1,0 +1,40 @@
+// Mirror (reverse X) half the zones
+
+// Shared by: Lyra Letourneau
+// Original: https://www.facebook.com/groups/PoweredbyPangolin/posts/9270424349677735/
+
+// This code exploits the fact that each zone has parameters associated with
+// it on a level that is usually not seen by the user. Notice that there are
+// content parameters such as SizeX used below. There are also "geo" 
+// parameters (such as Zone.N.UGC and Zone.N.Mesh) that are for zoning. It's
+// important to not use the geo ones, as that will move your zone. These Size
+// parameters just affect the content within a zone. These parameters are
+// also the same as what BEYOND server modifies, and by using numbers of zones
+// instead of the names, it won't matter what the zone names are, just that
+// they are in order. It also does a popup to let you know what you have
+// selected, something that may be useful for a MIDI controller trigger, where
+// the button has no label.
+
+// Note that if you wanted to use one script to toggle between mirrored and
+// unmirrored, you could multiply the existing value by negative one.
+
+// Also, a common alternative to the approach below is to use a zone size key
+// effect that sets the X size to 100 or -100 depending on a specified Channel
+// value. Then you can mirror or unmirror easily from the Channels panel, 
+// PangoScripts (keyboard or MIDI), or a MIDI controller mapped to that 
+// Channel. To reconfigure which zones are flipped for a different zone order
+// or number of lasers is handled by copy/pasting the zone-level effect to the 
+// desired zones.
+
+CodeName "Flip Zones > - <"
+Zone.0.SizeX = -100
+Zone.1.SizeX = -100
+Zone.2.SizeX = -100
+Zone.3.SizeX = -100
+Zone.4.SizeX = 100
+Zone.5.SizeX = 100
+Zone.6.SizeX = 100
+Zone.7.SizeX = 100
+Master.DISPLAYPOPUPTIMEOUT=.5 // The popup will persist for half a second
+displaypopup "> - <"
+Exit

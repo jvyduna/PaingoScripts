@@ -1,0 +1,20 @@
+// Fade volume out and restart timelime
+
+// Shared by: Lyra Letourneau
+// Original: https://www.facebook.com/groups/PoweredbyPangolin/posts/9270424349677735/
+
+
+// This script demonstrates the ability to animate objects over time. 
+// AnimateProp goes from value1 to value2, over value3 (in ms). In this
+// example, the master volume is faded out over 5 seconds, then the timeline
+// is restarted. You could animate volume and master brightness down at the
+// same time which could be interesting too. It then resets the values and
+// plays the show again.
+
+Codename "Restart Show Soft"
+AnimateProp "Master.AudioVolume", 100, 0, 5000 // 100 to 0 over 5 seconds
+sleep 5000 // 5 seconds
+TimelineSetPos 0
+Master.AudioVolume = 100
+TimelinePlay
+Exit

@@ -1,0 +1,42 @@
+// Automate a daily cue schedule and system restart
+
+// Shared by: Lyra Letourneau
+// Original: https://www.facebook.com/groups/PoweredbyPangolin/posts/9270424349677735/
+
+// This code is an example for an install where you want a sequence of cues 
+// (maybe timelines saved to cues) to run at specific times in sequence.
+// The end of the script waits for the clock to turn over to the next day,
+// then restarts the machine. If you put a shortcut to Beyond in the Windows
+// startup folder, it will auto-start Beyond, the script, and restart the
+// cycle each day.
+
+// Requirements for this to be fully automatic:
+//   1. You need to enable the "RunApp" command, which is in Settings ->
+//      Configuration --> Security, 
+//   2. You need to check the box "Do not ask for confirmation on exit from 
+//      Beyond", in Settings -> Misc -> General
+
+
+CodeName "Daily Schedule"
+Autostart
+WaitForTime 19,45,0,0 // Wait for 7:45 PM in system clock
+StartCue 1,1
+WaitforCueStop 1,1
+StartCue 1,10
+WaitforCueStop 1,10
+StartCue 1,21
+WaitforCueStop 1,21
+StartCue 1,41
+WaitforTime 23,0,0,0
+StopCue 1,41
+WaitForTime 23,59,59,0 // Wait for just before midnight
+Sleep 10000 // Wait 10 seconds to turn over to the next day
+
+// Shut the system down.
+// `shutdown` parameters: -r: sets it to "restart". -t 10: "in 10 seconds". 
+// More options can be found on the web.
+RunApp "C:\Windows\System32\shutdown", "-r -t 10" // full exe file name, parameters
+
+ExitBeyond
+
+

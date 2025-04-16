@@ -1,0 +1,17 @@
+// Autosave workspace every X minutes
+
+// Shared by: Lyra Letourneau
+// Original: https://www.facebook.com/groups/PoweredbyPangolin/posts/9270424349677735/
+
+// This code is designed to create an autosave script for your timeline.
+// Since saving does pause output, it's not recommended to leave this on
+// for operating your show. The Sleep argument is in milliseconds, so 
+// 60,000 is 60 seconds. You can change the timeframe to your desired save
+// duration, just know it does save a separate backup in the Backup
+// directory, so more frequent saves will eat up more storage. 
+
+
+CodeName "Autosave"
+TimelineQuickSave
+Sleep 60000 // Wait 1 Minute
+Restart

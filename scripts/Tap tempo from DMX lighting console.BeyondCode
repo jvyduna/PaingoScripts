@@ -1,0 +1,21 @@
+// Tap tempo from DMX lighting console
+
+// Shared by: Lyra Letourneau
+// Original: https://www.facebook.com/groups/PoweredbyPangolin/posts/9270424349677735/
+
+// This code is imperfect, but it will trigger the Tap Beat when the 
+// selected DMX channel "updates" any change in value. If you were to
+// set up a flash button on your DMX console with with a cue that 
+// sets the channel to full and off when you release, it will tap the
+// tempo. The sleep command is to wait for your tap on the console to reset
+// (200ms is enough to still get up to 200bpm out of your taps). You could
+// use a macro on your console to automatically do this from a speed master
+// or just use it to tap the bpm. To make this code better, you would really
+// want a conditional trigger, where when it hits value of 255 it taps,
+// but this works and is simpler code.
+
+Codename "Pull Tempo From DMX"
+WaitForDmx 501 // Channel at 1 will run code
+beattap
+sleep 200 // Make DMX reset to zero on console less than 200ms
+restart
