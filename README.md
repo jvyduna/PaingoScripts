@@ -31,6 +31,8 @@ I'd welcome more examples from people and can publish them here with attribution
 
 [Wiki Docs](https://wiki.pangolin.com/doku.php?id=beyond:pangoscript_commands) (see the PangoScript heading)
 
+[Code Examples](https://wiki.pangolin.com/doku.php?id=examples:pangoscript)
+
 The documentation in the editor is inconsistent and a little difficult to read. I commonly need to search these docs in a more flexible format. I've exported them to a Google Doc [here](https://docs.google.com/document/d/1z5e5lyS2LXS5ih7t-NOKsidoieMEVjgoa71GHQ82yeY/edit).
 
 I've also seen that @anodetocode has started an [excellent intro to PangoScript doc](https://github.com/anodetocode/pangoscript-intro).
