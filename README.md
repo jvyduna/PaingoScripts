@@ -13,7 +13,7 @@ I'd welcome more examples from people and can publish them here with attribution
 * **[Autosave workspace every X minutes](scripts/Autosave%20workspace%20every%20X%20minutes.BeyondCode)** - Saves workspace snapshots on a configurable timer. Be mindful of disk space consumption, and stop this script during shows.
 * **[Automate a daily cue schedule and system restart](scripts/Automate%20a%20daily%20cue%20schedule%20and%20system%20restart.BeyondCode)** - Start certain cues or timelines at specified times every day.
 * **[Mirror (reverse X) half the zones](scripts/Mirror%20(reverse%20X)%20half%20the%20zones.BeyondCode)** - Example of a script to flip (reverse X) half of your zones to enable a symmetric mirrored setup.
-* **[Tap tempo from DMX lighting console](scripts/Tap%20tempo%20from%20DMX%20lighting%20console.BeyondCode)** - Example of a script to flip (reverse X) half of your zones to enable a symmetric mirrored setup.
+* **[Tap tempo from DMX lighting console](scripts/Tap%20tempo%20from%20DMX%20lighting%20console.BeyondCode)** - Allows an external DMX lighting console to tap tempo for Beyond.
 * **[Fade volume out and restart timelime](scripts/Fade%20volume%20out%20and%20restart%20timelime.BeyondCode)** - Example of smoothly animating a control over time.
 
 
